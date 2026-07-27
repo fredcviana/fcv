@@ -215,5 +215,14 @@
         "url": "https://hidrobr.com"
       }
     ]
-  }
+  },
+  "posts": [
+    {
+      "slug": "a-sustentabilidade-de-verdade-so-existe-na-cadeia-de-suprime",
+      "title": "A Sustentabilidade de Verdade Só Existe na Cadeia de Suprimentos",
+      "tag": "Opinião",
+      "date": "jul. de 2025",
+      "excerpt": "O propósito desse artigo é investigar a relação entre o gap da sustentabilidade e a sustentabilidade nas cadeias de suprimentos, com o intuito de discutir se as insustentabilidades estão sendo transferidas pelos elos da cadeia."
+    }
+  ]
 }
