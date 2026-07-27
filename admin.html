@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>FCV · Admin</title>
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--green:#3B6E50;--amber:#B8762A;--bg:#F7F4EF;--card:#fff;--border:#DDD8CD;--muted:#7A7060;--text:#1C1913;--light:#E3EDE6;--red:#991b1b;--redbg:#fee2e2}
@@ -25,15 +27,12 @@ label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bot
 .tag-pill button{border:none;background:none;cursor:pointer;color:var(--green);font-size:16px;line-height:1;padding:0}
 /* Topbar */
 #topbar{position:sticky;top:0;z-index:10;background:var(--text);color:#fff;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:12px}
-#topbar-left{display:flex;align-items:center;gap:10px}
 .logo{font-family:Georgia,serif;font-style:italic;font-size:16px;color:#e3ede6}
 .topbar-sub{font-size:12px;color:#7a7060}
 #status-msg{font-size:12px;padding:4px 12px;border-radius:100px;display:none}
-.status-ok{background:#e3ede6;color:var(--green)}
-.status-err{background:var(--redbg);color:var(--red)}
+.status-ok{background:#e3ede6;color:var(--green)}.status-err{background:var(--redbg);color:var(--red)}
 /* Layout */
 #layout{display:flex;height:calc(100vh - 52px)}
-/* Sidebar */
 #sidebar{width:190px;background:var(--card);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
 .tab-btn{width:100%;text-align:left;padding:12px 16px;border:none;background:transparent;cursor:pointer;font-size:13px;font-family:inherit;color:var(--text);border-left:3px solid transparent;transition:all .15s}
 .tab-btn:hover{background:#f5f5f3}
@@ -41,12 +40,11 @@ label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bot
 #photo-box{margin:16px;border-top:1px solid var(--border);padding-top:16px;margin-top:auto}
 #photo-preview{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center 10%;border-radius:6px;margin-bottom:8px;display:none}
 .photo-upload-label{display:block;background:var(--bg);border:1px dashed var(--amber);border-radius:6px;padding:10px;cursor:pointer;text-align:center;font-size:11px;color:var(--amber);font-weight:600}
-/* Content area */
 #content{flex:1;padding:24px;overflow-y:auto;max-height:calc(100vh - 52px)}
 #content > div{max-width:720px}
 .section-heading{font-family:Georgia,serif;font-style:italic;font-size:20px;color:var(--green);margin-bottom:18px;font-weight:400}
 .sub-heading{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text);margin:20px 0 10px}
-/* Setup screen */
+/* Setup */
 #setup{display:flex;align-items:center;justify-content:center;height:calc(100vh - 52px)}
 .setup-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;width:480px;max-width:90vw}
 .setup-title{font-family:Georgia,serif;font-size:22px;margin-bottom:6px}
@@ -56,16 +54,29 @@ label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bot
 #loading{display:none;align-items:center;justify-content:center;height:calc(100vh - 52px);flex-direction:column;gap:12px;color:var(--muted);font-size:14px}
 .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* sections hidden by default */
-.section{display:none}
-.section.active{display:block}
+.section{display:none}.section.active{display:block}
+/* Posts list */
+.post-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.post-row:first-child{padding-top:0}.post-row:last-child{border-bottom:none}
+.post-row-title{flex:1;font-size:14px;font-weight:500}
+.post-row-meta{font-size:12px;color:var(--muted);white-space:nowrap}
+.post-tag-badge{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--green);background:var(--light);padding:2px 8px;border-radius:100px;white-space:nowrap}
+/* Quill custom */
+.ql-container{font-family:Inter,system-ui,sans-serif;font-size:15px;min-height:400px;border-bottom-left-radius:6px;border-bottom-right-radius:6px}
+.ql-toolbar{border-radius:6px 6px 0 0;background:#fafaf8}
+.ql-editor{min-height:400px;line-height:1.75}
+.ql-editor p{margin-bottom:.75em}
+/* Post editor header */
+.post-editor-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.back-btn{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer;border:none;background:none;font-family:inherit;padding:0}
+.back-btn:hover{color:var(--text)}
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- TOPBAR -->
 <div id="topbar">
-  <div id="topbar-left">
+  <div style="display:flex;align-items:center;gap:10px">
     <span class="logo">F.C.V.</span>
     <span class="topbar-sub" id="repo-label">Painel de edição</span>
   </div>
@@ -76,11 +87,11 @@ label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bot
   </div>
 </div>
 
-<!-- SETUP SCREEN -->
+<!-- SETUP -->
 <div id="setup">
   <div class="setup-card">
     <div class="setup-title">Conectar ao GitHub</div>
-    <div class="setup-sub">Suas edições serão salvas diretamente no repositório e publicadas via GitHub Pages.</div>
+    <div class="setup-sub">Suas edições serão salvas no repositório e publicadas via GitHub Pages.</div>
     <div class="field"><label>Personal Access Token <a href="https://github.com/settings/tokens/new?scopes=repo" target="_blank" style="color:var(--green);font-size:10px">(gerar →)</a></label><input type="password" id="gh-token" placeholder="ghp_..."></div>
     <div class="row">
       <div class="field" style="flex:1"><label>Usuário GitHub</label><input id="gh-owner" placeholder="fredericoviana"></div>
@@ -93,47 +104,38 @@ label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bot
 </div>
 
 <!-- LOADING -->
-<div id="loading">
-  <div class="spinner"></div>
-  <span id="loading-msg">Carregando...</span>
-</div>
+<div id="loading"><div class="spinner"></div><span id="loading-msg">Carregando...</span></div>
 
-<!-- EDITOR LAYOUT -->
+<!-- LAYOUT -->
 <div id="layout" style="display:none">
-
-  <!-- SIDEBAR -->
   <div id="sidebar">
     <button class="tab-btn active" onclick="showTab('hero')">🏠 Hero</button>
     <button class="tab-btn" onclick="showTab('about')">👤 Sobre</button>
     <button class="tab-btn" onclick="showTab('publications')">📚 Publicações</button>
     <button class="tab-btn" onclick="showTab('projects')">🔬 Projetos</button>
-    <button class="tab-btn" onclick="showTab('blog')">✍️ Blog</button>
+    <button class="tab-btn" onclick="showTab('blog')">🔗 Blog Externo</button>
+    <button class="tab-btn" onclick="showTab('posts')">✍️ Posts</button>
     <button class="tab-btn" onclick="showTab('contact')">📬 Contato</button>
-
     <div id="photo-box">
       <label style="font-size:11px;font-weight:600;color:var(--muted);margin-bottom:8px;letter-spacing:.05em;text-transform:uppercase;display:block">Foto</label>
-      <img id="photo-preview" alt="Foto">
-      <label class="photo-upload-label">
-        📷 Enviar foto
-        <input type="file" accept="image/*" onchange="handlePhoto(event)" style="display:none">
-      </label>
+      <img id="photo-preview" alt="">
+      <label class="photo-upload-label">📷 Enviar foto<input type="file" accept="image/*" onchange="handlePhoto(event)" style="display:none"></label>
     </div>
   </div>
 
-  <!-- CONTENT -->
   <div id="content">
 
     <!-- HERO -->
     <div class="section active" id="sec-hero">
       <div class="section-heading">Hero</div>
-      <div class="field"><label>Linha de identificação (eyebrow)</label><input id="hero-eyebrow"></div>
+      <div class="field"><label>Linha de identificação</label><input id="hero-eyebrow"></div>
       <div class="field"><label>Tagline</label><textarea id="hero-tagline" rows="4"></textarea></div>
     </div>
 
     <!-- ABOUT -->
     <div class="section" id="sec-about">
       <div class="section-heading">Sobre</div>
-      <div class="sub-heading">Parágrafos da bio</div>
+      <div class="sub-heading">Parágrafos</div>
       <div id="about-paragraphs"></div>
       <button class="btn btn-green" onclick="addParagraph()">+ Parágrafo</button>
       <div class="sub-heading">Tags de pesquisa</div>
@@ -159,11 +161,47 @@ label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bot
       <button class="btn btn-green" onclick="addProject()">+ Projeto</button>
     </div>
 
-    <!-- BLOG -->
+    <!-- BLOG EXTERNO -->
     <div class="section" id="sec-blog">
-      <div class="section-heading">Blog</div>
+      <div class="section-heading">Blog Externo</div>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Links para artigos publicados fora do site (HIDROBR, eventos, etc.)</p>
       <div id="blog-list"></div>
-      <button class="btn btn-green" onclick="addPost()">+ Post</button>
+      <button class="btn btn-green" onclick="addPost()">+ Link externo</button>
+    </div>
+
+    <!-- POSTS (editor interno) -->
+    <div class="section" id="sec-posts">
+      <!-- Lista de posts -->
+      <div id="posts-list-view">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+          <div class="section-heading" style="margin:0">Posts</div>
+          <button class="btn btn-green" onclick="openPostEditor(null)">✍️ Novo post</button>
+        </div>
+        <div id="posts-list">
+          <p style="color:var(--muted);font-size:13px">Nenhum post ainda. Clique em "Novo post" para começar.</p>
+        </div>
+      </div>
+
+      <!-- Editor de post -->
+      <div id="posts-editor-view" style="display:none">
+        <div class="post-editor-header">
+          <button class="back-btn" onclick="closePostEditor()">← Voltar</button>
+          <span style="font-size:12px;color:var(--muted)" id="post-editor-status"></span>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <button class="btn btn-amber" onclick="publishPost()">🚀 Publicar post</button>
+          </div>
+        </div>
+        <div class="field"><label>Título</label><input id="post-title" placeholder="Título do post"></div>
+        <div class="row">
+          <div class="field" style="flex:1"><label>Categoria</label><input id="post-tag" placeholder="Análise, Opinião, Estudo de Caso…"></div>
+          <div class="field" style="width:130px"><label>Data</label><input id="post-date" placeholder="Jan 2025"></div>
+        </div>
+        <div class="field"><label>Trecho (aparece na lista do site)</label><textarea id="post-excerpt" rows="2" placeholder="Uma frase que resume o post…"></textarea></div>
+        <div class="field">
+          <label>Conteúdo</label>
+          <div id="quill-editor"></div>
+        </div>
+      </div>
     </div>
 
     <!-- CONTACT -->
@@ -188,25 +226,16 @@ label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bot
 </div>
 
 <script>
-// ── Estado global ───────────────────────────────────────────────
-let cfg = null;   // { token, owner, repo, branch }
-let data = null;  // site content
-let photo = null; // base64 data URL
-let fileSHAs = {}; // { 'content.json': sha, 'index.html': sha }
+// ── Estado ──────────────────────────────────────────────────────
+let cfg = null, data = null, photo = null, fileSHAs = {};
+let quill = null, editingPostIndex = null;
 
 const PUB_TYPES = {livro:'Livro',capitulo:'Capítulo',artigo:'Artigo',apresentacao:'Conferência',relatorio:'Relatório'};
 
 const DEFAULT = {
-  hero:{
-    eyebrow:'Gerente de Sustentabilidade · HIDROBR · PhD em Resiliência',
-    tagline:'Investigo como sistemas críticos respondem a choques climáticos e pressões institucionais. Na HIDROBR, esse trabalho vira prática: projetos, políticas e decisões com base científica.'
-  },
+  hero:{eyebrow:'Gerente de Sustentabilidade · HIDROBR · PhD em Resiliência',tagline:'Investigo como sistemas críticos respondem a choques climáticos e pressões institucionais. Na HIDROBR, esse trabalho vira prática: projetos, políticas e decisões com base científica.'},
   about:{
-    paragraphs:[
-      'Sou Engenheiro Ambiental pela FUMEC, com mestrado em Estratégia Empresarial e doutor em Sustentabilidade pela Fundação Getulio Vargas (FGV). Realizei estágio doutoral na Pontificia Universidad Católica de Valparaíso (PUCV), no Chile, onde aprofundei o uso de inteligência artificial aplicada a engenharia.',
-      'Na HIDROBR, lidero a área de Sustentabilidade. Tenho trabalhos publicados sobre resiliência energética, gestão de desastres e mercados de carbono.',
-      'Minha pesquisa parte da teoria da panarquia e dos Sistemas Socioecológicos (SES) para entender como sistemas críticos, especialmente o setor elétrico brasileiro, respondem a choques climáticos e falhas de governança. A distância entre ciência e decisão ainda é grande demais.'
-    ],
+    paragraphs:['Sou Engenheiro Ambiental pela FUMEC, com mestrado em Estratégia Empresarial e doutor em Sustentabilidade pela Fundação Getulio Vargas (FGV). Realizei estágio doutoral na Pontificia Universidad Católica de Valparaíso (PUCV), no Chile, onde aprofundei o uso de inteligência artificial aplicada a engenharia.','Na HIDROBR, lidero a área de Sustentabilidade. Tenho trabalhos publicados sobre resiliência energética, gestão de desastres e mercados de carbono.','Minha pesquisa parte da teoria da panarquia e dos Sistemas Socioecológicos (SES) para entender como sistemas críticos, especialmente o setor elétrico brasileiro, respondem a choques climáticos e falhas de governança. A distância entre ciência e decisão ainda é grande demais.'],
     tags:['Resiliência de Infraestrutura','Sistemas Socioecológicos','Adaptação Climática','Teoria da Panarquia','Governança','Mercados de Carbono']
   },
   publications:{
@@ -238,357 +267,333 @@ const DEFAULT = {
     {tag:'Workshop',title:'III Workshop HIDROBR — Pilhas na Mineração: do Projeto à Operação',date:'2024',link:'https://www.hidrobr.com/artigo/iii-workshop-hidrobr-pilhas-na-mineracao-do-projeto-a-operacao/'},
     {tag:'Estudo de Caso',title:'E se o Mercado de Carbono Fosse Acessível para Todo Mundo?',date:'2023',link:'https://www.hidrobr.com/artigo/e-se-o-mercado-de-carbono-fosse-acessivel-para-todo-mundo-relato-de-um-experimento/'}
   ],
-  contact:{
-    text1:'Atuo como Gerente de Sustentabilidade na HIDROBR. Para projetos de consultoria, o contato é pelo site da empresa.',
-    text2:'Para colaborações de pesquisa, palestras ou revisão de artigos, fale diretamente comigo.',
-    email:'fredcviana@gmail.com',
-    location:'Belo Horizonte, Minas Gerais',
-    institutionUrl:'https://hidrobr.com',
-    degree:'PhD em Resiliência · FGV',
-    links:[
-      {icon:'🎓',label:'ResearchGate',url:'https://www.researchgate.net/profile/Frederico-Viana'},
-      {icon:'💼',label:'LinkedIn',url:'https://www.linkedin.com/in/frederico-campos-viana-65686014'},
-      {icon:'🌐',label:'hidrobr.com',url:'https://hidrobr.com'}
-    ]
-  }
+  posts:[],
+  contact:{text1:'Atuo como Gerente de Sustentabilidade na HIDROBR. Para projetos de consultoria, o contato é pelo site da empresa.',text2:'Para colaborações de pesquisa, palestras ou revisão de artigos, fale diretamente comigo.',email:'fredcviana@gmail.com',location:'Belo Horizonte, Minas Gerais',institutionUrl:'https://hidrobr.com',degree:'PhD em Resiliência · FGV',links:[{icon:'🎓',label:'ResearchGate',url:'https://www.researchgate.net/profile/Frederico-Viana'},{icon:'💼',label:'LinkedIn',url:'https://www.linkedin.com/in/frederico-campos-viana-65686014'},{icon:'🌐',label:'hidrobr.com',url:'https://hidrobr.com'}]}
 };
 
 // ── GitHub API ──────────────────────────────────────────────────
-async function ghGet(path) {
-  const r = await fetch(
-    `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}?ref=${cfg.branch}`,
-    { headers: { Authorization: `token ${cfg.token}`, Accept: 'application/vnd.github.v3+json' } }
-  );
-  if (r.status === 404) return null;
-  if (!r.ok) throw new Error(`GitHub API: ${r.status} ${await r.text()}`);
+async function ghGet(path){
+  const r=await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}?ref=${cfg.branch}`,{headers:{Authorization:`token ${cfg.token}`,Accept:'application/vnd.github.v3+json'}});
+  if(r.status===404)return null;
+  if(!r.ok)throw new Error(`GitHub ${r.status}: ${await r.text()}`);
   return r.json();
 }
 
-async function ghPut(path, content, sha, message) {
-  const body = {
-    message,
-    content: btoa(unescape(encodeURIComponent(content))),
-    branch: cfg.branch
-  };
-  if (sha) body.sha = sha;
-  const r = await fetch(
-    `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}`,
-    { method: 'PUT', headers: { Authorization: `token ${cfg.token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
-  );
-  if (!r.ok) throw new Error(`Erro ao salvar ${path}: ${await r.text()}`);
-  const j = await r.json();
-  return j.content.sha;
+async function ghPut(path,content,sha,message){
+  const body={message,content:btoa(unescape(encodeURIComponent(content))),branch:cfg.branch};
+  if(sha)body.sha=sha;
+  const r=await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}`,{method:'PUT',headers:{Authorization:`token ${cfg.token}`,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error(`Erro ao salvar ${path}: ${await r.text()}`);
+  return (await r.json()).content.sha;
 }
 
-// ── Setup / Auth ────────────────────────────────────────────────
-function loadConfig() {
-  const s = localStorage.getItem('fcv-gh-config');
-  return s ? JSON.parse(s) : null;
-}
+// ── Auth ────────────────────────────────────────────────────────
+function loadConfig(){const s=localStorage.getItem('fcv-gh-config');return s?JSON.parse(s):null;}
+function saveConfig(c){localStorage.setItem('fcv-gh-config',JSON.stringify(c));}
 
-function saveConfig(c) {
-  localStorage.setItem('fcv-gh-config', JSON.stringify(c));
-}
-
-async function connect() {
-  const token = document.getElementById('gh-token').value.trim();
-  const owner = document.getElementById('gh-owner').value.trim();
-  const repo  = document.getElementById('gh-repo').value.trim();
-  const branch = document.getElementById('gh-branch').value.trim() || 'main';
-  const errEl = document.getElementById('setup-err');
-  errEl.style.display = 'none';
-
-  if (!token || !owner || !repo) { errEl.textContent = 'Preencha todos os campos.'; errEl.style.display='block'; return; }
-
-  cfg = { token, owner, repo, branch };
+async function connect(){
+  const token=document.getElementById('gh-token').value.trim();
+  const owner=document.getElementById('gh-owner').value.trim();
+  const repo=document.getElementById('gh-repo').value.trim();
+  const branch=document.getElementById('gh-branch').value.trim()||'main';
+  const errEl=document.getElementById('setup-err');
+  errEl.style.display='none';
+  if(!token||!owner||!repo){errEl.textContent='Preencha todos os campos.';errEl.style.display='block';return;}
+  cfg={token,owner,repo,branch};
   showLoading('Verificando conexão...');
-
-  try {
-    const r = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
-      headers: { Authorization: `token ${token}` }
-    });
-    if (!r.ok) throw new Error(r.status === 404 ? 'Repositório não encontrado.' : 'Token inválido ou sem acesso.');
-    saveConfig(cfg);
-    await loadData();
-  } catch (e) {
-    cfg = null;
-    hideLoading();
-    errEl.textContent = e.message;
-    errEl.style.display = 'block';
-  }
+  try{
+    const r=await fetch(`https://api.github.com/repos/${owner}/${repo}`,{headers:{Authorization:`token ${token}`}});
+    if(!r.ok)throw new Error(r.status===404?'Repositório não encontrado.':'Token inválido ou sem permissão.');
+    saveConfig(cfg);await loadData();
+  }catch(e){cfg=null;hideLoading();errEl.textContent=e.message;errEl.style.display='block';}
 }
 
-function disconnect() {
-  localStorage.removeItem('fcv-gh-config');
-  location.reload();
-}
+function disconnect(){localStorage.removeItem('fcv-gh-config');location.reload();}
 
-// ── Data load/save ──────────────────────────────────────────────
-async function loadData() {
+// ── Data ────────────────────────────────────────────────────────
+async function loadData(){
   showLoading('Carregando conteúdo do repositório...');
-  try {
-    const f = await ghGet('content.json');
-    if (f) {
-      data = JSON.parse(decodeURIComponent(escape(atob(f.content.replace(/\n/g,'')))));
-      fileSHAs['content.json'] = f.sha;
-    } else {
-      data = JSON.parse(JSON.stringify(DEFAULT));
-    }
-    // load photo from localStorage (per-browser)
-    photo = localStorage.getItem('fcv-photo') || null;
+  try{
+    const f=await ghGet('content.json');
+    if(f){data=JSON.parse(decodeURIComponent(escape(atob(f.content.replace(/\n/g,'')))));fileSHAs['content.json']=f.sha;}
+    else{data=JSON.parse(JSON.stringify(DEFAULT));}
+    if(!data.posts)data.posts=[];
+    photo=localStorage.getItem('fcv-photo')||null;
+    const idx=await ghGet('index.html');if(idx)fileSHAs['index.html']=idx.sha;
+    hideLoading();showEditor();
+  }catch(e){hideLoading();showStatus('Erro: '+e.message,true);document.getElementById('setup').style.display='flex';}
+}
 
-    // get index.html SHA if exists
-    const idx = await ghGet('index.html');
-    if (idx) fileSHAs['index.html'] = idx.sha;
+async function save(){
+  collectData();
+  const btn=document.getElementById('btn-save');btn.disabled=true;btn.textContent='Salvando...';
+  try{
+    // Save content.json (without post content to keep it lean — post content in separate files)
+    const lean=JSON.parse(JSON.stringify(data));
+    lean.posts=data.posts.map(p=>({slug:p.slug,title:p.title,tag:p.tag,date:p.date,excerpt:p.excerpt}));
+    fileSHAs['content.json']=await ghPut('content.json',JSON.stringify(lean,null,2),fileSHAs['content.json'],'Atualiza content via admin');
+    fileSHAs['index.html']=await ghPut('index.html',generateSiteHTML(),fileSHAs['index.html'],'Atualiza site via admin');
+    if(photo)localStorage.setItem('fcv-photo',photo);
+    showStatus('✓ Publicado no GitHub!',false);
+  }catch(e){showStatus('Erro: '+e.message,true);}
+  finally{btn.disabled=false;btn.textContent='💾 Salvar & Publicar';}
+}
 
-    hideLoading();
-    showEditor();
-  } catch(e) {
-    hideLoading();
-    showStatus('Erro: ' + e.message, true);
-    document.getElementById('setup').style.display = 'flex';
+// ── Post Editor ─────────────────────────────────────────────────
+function initQuill(){
+  if(quill)return;
+  quill=new Quill('#quill-editor',{
+    theme:'snow',
+    placeholder:'Escreva seu post aqui…',
+    modules:{toolbar:[
+      [{header:[1,2,3,false]}],
+      ['bold','italic','underline'],
+      [{list:'ordered'},{list:'bullet'}],
+      ['link','blockquote'],
+      ['clean']
+    ]}
+  });
+}
+
+function openPostEditor(index){
+  initQuill();
+  editingPostIndex=index;
+  document.getElementById('posts-list-view').style.display='none';
+  document.getElementById('posts-editor-view').style.display='block';
+
+  if(index!==null){
+    const post=data.posts[index];
+    document.getElementById('post-title').value=post.title||'';
+    document.getElementById('post-tag').value=post.tag||'';
+    document.getElementById('post-date').value=post.date||'';
+    document.getElementById('post-excerpt').value=post.excerpt||'';
+    document.getElementById('post-editor-status').textContent='Editando post existente';
+    // Load content from GitHub
+    loadPostContent(post.slug);
+  }else{
+    document.getElementById('post-title').value='';
+    document.getElementById('post-tag').value='';
+    document.getElementById('post-date').value=new Date().toLocaleDateString('pt-BR',{month:'short',year:'numeric'});
+    document.getElementById('post-excerpt').value='';
+    document.getElementById('post-editor-status').textContent='Novo post';
+    quill.setContents([{insert:'\n'}]);
   }
 }
 
-async function save() {
-  collectData();
-  const btn = document.getElementById('btn-save');
-  btn.disabled = true;
-  btn.textContent = 'Salvando...';
+async function loadPostContent(slug){
+  document.getElementById('post-editor-status').textContent='Carregando conteúdo…';
+  try{
+    const f=await ghGet(`posts/${slug}.json`);
+    if(f){
+      const content=JSON.parse(decodeURIComponent(escape(atob(f.content.replace(/\n/g,'')))));
+      quill.clipboard.dangerouslyPasteHTML(content.body||'');
+      fileSHAs[`posts/${slug}.json`]=f.sha;
+    }
+    document.getElementById('post-editor-status').textContent='';
+  }catch(e){document.getElementById('post-editor-status').textContent='Erro ao carregar';}
+}
 
-  try {
-    const contentJSON = JSON.stringify(data, null, 2);
-    fileSHAs['content.json'] = await ghPut('content.json', contentJSON, fileSHAs['content.json'], 'Atualiza content.json via admin');
+function slugify(title){
+  return title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').substring(0,60);
+}
 
-    const siteHTML = generateSiteHTML();
-    fileSHAs['index.html'] = await ghPut('index.html', siteHTML, fileSHAs['index.html'], 'Atualiza site via admin');
+async function publishPost(){
+  const title=document.getElementById('post-title').value.trim();
+  if(!title){alert('Adicione um título ao post.');return;}
+  const tag=document.getElementById('post-tag').value.trim();
+  const date=document.getElementById('post-date').value.trim();
+  const excerpt=document.getElementById('post-excerpt').value.trim();
+  const body=quill.root.innerHTML;
+  const slug=editingPostIndex!==null?data.posts[editingPostIndex].slug:slugify(title);
 
-    // save photo to localStorage
-    if (photo) localStorage.setItem('fcv-photo', photo);
+  const statusEl=document.getElementById('post-editor-status');
+  statusEl.textContent='Publicando…';
 
-    showStatus('✓ Publicado no GitHub!', false);
-  } catch(e) {
-    showStatus('Erro: ' + e.message, true);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '💾 Salvar & Publicar';
-  }
+  try{
+    // Save post content file
+    const postContent=JSON.stringify({body});
+    const contentKey=`posts/${slug}.json`;
+    fileSHAs[contentKey]=await ghPut(contentKey,postContent,fileSHAs[contentKey]||null,`Post: ${title}`);
+
+    // Save post HTML page
+    const postHTML=generatePostHTML({title,tag,date,body,slug});
+    const htmlKey=`posts/${slug}.html`;
+    const existing=await ghGet(htmlKey);
+    fileSHAs[htmlKey]=await ghPut(htmlKey,postHTML,existing?existing.sha:null,`Publica post: ${title}`);
+
+    // Update data.posts
+    const postMeta={slug,title,tag,date,excerpt};
+    if(editingPostIndex!==null){data.posts[editingPostIndex]=postMeta;}
+    else{data.posts.unshift(postMeta);}
+
+    // Update content.json and index.html
+    const lean=JSON.parse(JSON.stringify(data));
+    lean.posts=data.posts.map(p=>({slug:p.slug,title:p.title,tag:p.tag,date:p.date,excerpt:p.excerpt}));
+    fileSHAs['content.json']=await ghPut('content.json',JSON.stringify(lean,null,2),fileSHAs['content.json'],'Atualiza posts via admin');
+    fileSHAs['index.html']=await ghPut('index.html',generateSiteHTML(),fileSHAs['index.html'],'Atualiza site via admin');
+
+    showStatus('✓ Post publicado!',false);
+    statusEl.textContent='';
+    closePostEditor();
+  }catch(e){statusEl.textContent='';showStatus('Erro: '+e.message,true);}
+}
+
+function closePostEditor(){
+  document.getElementById('posts-list-view').style.display='block';
+  document.getElementById('posts-editor-view').style.display='none';
+  renderPostsList();
+}
+
+async function deletePost(index){
+  if(!confirm('Remover este post?'))return;
+  const slug=data.posts[index].slug;
+  data.posts.splice(index,1);
+  // We don't delete the files from GitHub (safe), just remove from index
+  try{
+    const lean=JSON.parse(JSON.stringify(data));
+    lean.posts=data.posts.map(p=>({slug:p.slug,title:p.title,tag:p.tag,date:p.date,excerpt:p.excerpt}));
+    fileSHAs['content.json']=await ghPut('content.json',JSON.stringify(lean,null,2),fileSHAs['content.json'],'Remove post do index');
+    fileSHAs['index.html']=await ghPut('index.html',generateSiteHTML(),fileSHAs['index.html'],'Atualiza site via admin');
+    showStatus('Post removido da lista.',false);
+  }catch(e){showStatus('Erro: '+e.message,true);}
+  renderPostsList();
+}
+
+function renderPostsList(){
+  const el=document.getElementById('posts-list');
+  if(!data.posts.length){el.innerHTML='<p style="color:var(--muted);font-size:13px">Nenhum post ainda. Clique em "Novo post" para começar.</p>';return;}
+  el.innerHTML=data.posts.map((p,i)=>`
+    <div class="post-row">
+      <div>
+        <div class="post-row-title">${escHtml(p.title)}</div>
+        ${p.excerpt?`<div style="font-size:12px;color:var(--muted);margin-top:2px">${escHtml(p.excerpt.substring(0,80))}…</div>`:''}
+      </div>
+      <span class="post-tag-badge">${escHtml(p.tag)}</span>
+      <span class="post-row-meta">${p.date}</span>
+      <div style="display:flex;gap:6px;flex-shrink:0">
+        <button class="btn btn-ghost" style="padding:5px 10px;font-size:12px" onclick="openPostEditor(${i})">✏️ Editar</button>
+        <button class="btn btn-red" style="padding:5px 10px;font-size:12px" onclick="deletePost(${i})">✕</button>
+      </div>
+    </div>`).join('');
 }
 
 // ── UI helpers ──────────────────────────────────────────────────
-function showLoading(msg) {
-  document.getElementById('setup').style.display = 'none';
-  document.getElementById('loading').style.display = 'flex';
-  document.getElementById('layout').style.display = 'none';
-  document.getElementById('loading-msg').textContent = msg;
-}
+function showLoading(msg){document.getElementById('setup').style.display='none';document.getElementById('loading').style.display='flex';document.getElementById('layout').style.display='none';document.getElementById('loading-msg').textContent=msg;}
+function hideLoading(){document.getElementById('loading').style.display='none';}
+function showEditor(){document.getElementById('repo-label').textContent=`${cfg.owner}/${cfg.repo}`;document.getElementById('btn-save').disabled=false;document.getElementById('btn-disconnect').style.display='';document.getElementById('layout').style.display='flex';if(photo){document.getElementById('photo-preview').src=photo;document.getElementById('photo-preview').style.display='block';}populateAll();}
+function showStatus(msg,isErr){const el=document.getElementById('status-msg');el.textContent=msg;el.className=isErr?'status-err':'status-ok';el.style.display='block';setTimeout(()=>el.style.display='none',4000);}
+function showTab(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('sec-'+id).classList.add('active');event.currentTarget.classList.add('active');}
+function handlePhoto(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{photo=ev.target.result;const p=document.getElementById('photo-preview');p.src=photo;p.style.display='block';};r.readAsDataURL(f);}
+function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-function hideLoading() {
-  document.getElementById('loading').style.display = 'none';
-}
-
-function showEditor() {
-  document.getElementById('repo-label').textContent = `${cfg.owner}/${cfg.repo}`;
-  document.getElementById('btn-save').disabled = false;
-  document.getElementById('btn-disconnect').style.display = '';
-  document.getElementById('layout').style.display = 'flex';
-  if (photo) { document.getElementById('photo-preview').src = photo; document.getElementById('photo-preview').style.display = 'block'; }
-  populateAll();
-}
-
-function showStatus(msg, isErr) {
-  const el = document.getElementById('status-msg');
-  el.textContent = msg;
-  el.className = isErr ? 'status-err' : 'status-ok';
-  el.style.display = 'block';
-  setTimeout(() => el.style.display = 'none', 4000);
-}
-
-function showTab(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('sec-' + id).classList.add('active');
-  event.currentTarget.classList.add('active');
-}
-
-function handlePhoto(e) {
-  const f = e.target.files[0]; if (!f) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    photo = ev.target.result;
-    const prev = document.getElementById('photo-preview');
-    prev.src = photo; prev.style.display = 'block';
-  };
-  reader.readAsDataURL(f);
-}
-
-// ── Populate UI ─────────────────────────────────────────────────
-function populateAll() {
-  // Hero
-  document.getElementById('hero-eyebrow').value = data.hero.eyebrow;
-  document.getElementById('hero-tagline').value = data.hero.tagline;
-  // About paragraphs
-  renderParagraphs();
-  renderTags();
-  // Publications
-  renderPubs('books');
-  renderPubs('articles');
-  // Projects
-  renderProjects();
-  // Blog
-  renderBlog();
-  // Contact
-  document.getElementById('contact-text1').value = data.contact.text1;
-  document.getElementById('contact-text2').value = data.contact.text2;
-  document.getElementById('contact-email').value = data.contact.email;
-  document.getElementById('contact-location').value = data.contact.location;
-  document.getElementById('contact-institutionUrl').value = data.contact.institutionUrl;
-  document.getElementById('contact-degree').value = data.contact.degree;
+// ── Populate ────────────────────────────────────────────────────
+function populateAll(){
+  document.getElementById('hero-eyebrow').value=data.hero.eyebrow;
+  document.getElementById('hero-tagline').value=data.hero.tagline;
+  renderParagraphs();renderTags();renderPubs('books');renderPubs('articles');renderProjects();renderBlog();renderPostsList();
+  document.getElementById('contact-text1').value=data.contact.text1;
+  document.getElementById('contact-text2').value=data.contact.text2;
+  document.getElementById('contact-email').value=data.contact.email;
+  document.getElementById('contact-location').value=data.contact.location;
+  document.getElementById('contact-institutionUrl').value=data.contact.institutionUrl;
+  document.getElementById('contact-degree').value=data.contact.degree;
   renderContactLinks();
 }
 
-function renderParagraphs() {
-  const el = document.getElementById('about-paragraphs');
-  el.innerHTML = data.about.paragraphs.map((p,i) => `
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-        <span style="font-size:12px;color:var(--muted);font-weight:600">Parágrafo ${i+1}</span>
-        <button class="btn btn-red" onclick="delParagraph(${i})">✕ Remover</button>
-      </div>
-      <textarea rows="4" onchange="data.about.paragraphs[${i}]=this.value">${p}</textarea>
-    </div>`).join('');
+function renderParagraphs(){const el=document.getElementById('about-paragraphs');el.innerHTML=data.about.paragraphs.map((p,i)=>`<div class="card"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:12px;color:var(--muted);font-weight:600">Parágrafo ${i+1}</span><button class="btn btn-red" onclick="delParagraph(${i})">✕</button></div><textarea rows="4" onchange="data.about.paragraphs[${i}]=this.value">${escHtml(p)}</textarea></div>`).join('');}
+function addParagraph(){data.about.paragraphs.push('');renderParagraphs();}
+function delParagraph(i){data.about.paragraphs.splice(i,1);renderParagraphs();}
+
+function renderTags(){const el=document.getElementById('about-tags');el.innerHTML=data.about.tags.map((t,i)=>`<span class="tag-pill"><input value="${escHtml(t)}" onchange="data.about.tags[${i}]=this.value" style="width:${Math.max(60,t.length*8)}px"><button onclick="delTag(${i})">×</button></span>`).join('');}
+function addTag(){data.about.tags.push('Nova tag');renderTags();}
+function delTag(i){data.about.tags.splice(i,1);renderTags();}
+
+function pubTypeOptions(sel){return Object.entries(PUB_TYPES).map(([k,v])=>`<option value="${k}" ${k===sel?'selected':''}>${v}</option>`).join('');}
+function renderPubs(list){const el=document.getElementById(`pub-${list}`);el.innerHTML=data.publications[list].map((p,i)=>`<div class="card"><div class="row" style="margin-bottom:10px"><select onchange="data.publications['${list}'][${i}].type=this.value" style="width:140px">${pubTypeOptions(p.type)}</select><input value="${p.year}" placeholder="Ano" style="width:70px" onchange="data.publications['${list}'][${i}].year=this.value"><label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--amber);text-transform:none;letter-spacing:0;cursor:pointer"><input type="checkbox" ${p.isNew?'checked':''} onchange="data.publications['${list}'][${i}].isNew=this.checked"> Novo</label><button class="btn btn-red" style="margin-left:auto" onclick="delPub('${list}',${i})">✕</button></div><div class="field"><label>Título</label><input value="${escHtml(p.title)}" onchange="data.publications['${list}'][${i}].title=this.value"></div><div class="field"><label>Autores</label><input value="${escHtml(p.authors)}" onchange="data.publications['${list}'][${i}].authors=this.value"></div><div class="field"><label>Venue</label><input value="${escHtml(p.venue)}" onchange="data.publications['${list}'][${i}].venue=this.value"></div><div class="field"><label>Link</label><input value="${escHtml(p.link)}" onchange="data.publications['${list}'][${i}].link=this.value" placeholder="https://"></div></div>`).join('');}
+function addPub(list,type){data.publications[list].push({year:new Date().getFullYear().toString(),type,title:'',authors:'',venue:'',link:'',isNew:true});renderPubs(list);}
+function delPub(list,i){data.publications[list].splice(i,1);renderPubs(list);}
+
+function renderProjects(){const el=document.getElementById('projects-list');el.innerHTML=data.projects.map((p,i)=>`<div class="card"><div style="display:flex;justify-content:space-between;margin-bottom:12px"><strong>${escHtml(p.title)||`Projeto ${i+1}`}</strong><button class="btn btn-red" onclick="delProject(${i})">✕</button></div><div class="row"><div class="field" style="width:72px"><label>Ícone</label><input value="${p.icon}" onchange="data.projects[${i}].icon=this.value"></div><div class="field" style="flex:1"><label>Título</label><input value="${escHtml(p.title)}" onchange="data.projects[${i}].title=this.value"></div></div><div class="field"><label>Descrição</label><textarea rows="3" onchange="data.projects[${i}].desc=this.value">${escHtml(p.desc)}</textarea></div><label style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase">Links</label><div style="margin:6px 0">${p.links.map((l,j)=>`<div class="row" style="margin-bottom:6px"><input value="${escHtml(l.label)}" placeholder="Texto" style="flex:1" onchange="data.projects[${i}].links[${j}].label=this.value"><input value="${escHtml(l.url)}" placeholder="https://" style="flex:2" onchange="data.projects[${i}].links[${j}].url=this.value"><button class="btn btn-red" onclick="delProjLink(${i},${j})">✕</button></div>`).join('')}</div><button class="btn btn-ghost" style="font-size:12px;padding:6px 12px" onclick="addProjLink(${i})">+ Link</button></div>`).join('');}
+function addProject(){data.projects.push({icon:'🔬',title:'',desc:'',links:[]});renderProjects();}
+function delProject(i){data.projects.splice(i,1);renderProjects();}
+function addProjLink(i){data.projects[i].links.push({label:'',url:''});renderProjects();}
+function delProjLink(i,j){data.projects[i].links.splice(j,1);renderProjects();}
+
+function renderBlog(){const el=document.getElementById('blog-list');el.innerHTML=data.blog.map((p,i)=>`<div class="card"><div style="display:flex;justify-content:space-between;margin-bottom:12px"><strong>${escHtml(p.title)||`Link ${i+1}`}</strong><button class="btn btn-red" onclick="delBlogLink(${i})">✕</button></div><div class="row"><div class="field" style="flex:1"><label>Categoria</label><input value="${escHtml(p.tag)}" onchange="data.blog[${i}].tag=this.value"></div><div class="field" style="width:90px"><label>Data</label><input value="${p.date}" onchange="data.blog[${i}].date=this.value"></div></div><div class="field"><label>Título</label><input value="${escHtml(p.title)}" onchange="data.blog[${i}].title=this.value"></div><div class="field"><label>Link</label><input value="${escHtml(p.link)}" onchange="data.blog[${i}].link=this.value" placeholder="https://"></div></div>`).join('');}
+function addPost(){data.blog.push({tag:'',title:'',date:new Date().getFullYear().toString(),link:''});renderBlog();}
+function delBlogLink(i){data.blog.splice(i,1);renderBlog();}
+
+function renderContactLinks(){const el=document.getElementById('contact-links');el.innerHTML=data.contact.links.map((l,i)=>`<div class="row" style="margin-bottom:8px"><input value="${l.icon}" style="width:46px" onchange="data.contact.links[${i}].icon=this.value"><input value="${escHtml(l.label)}" placeholder="Rótulo" style="flex:1" onchange="data.contact.links[${i}].label=this.value"><input value="${escHtml(l.url)}" placeholder="https://" style="flex:2" onchange="data.contact.links[${i}].url=this.value"><button class="btn btn-red" onclick="delContactLink(${i})">✕</button></div>`).join('');}
+function addContactLink(){data.contact.links.push({icon:'🔗',label:'',url:''});renderContactLinks();}
+function delContactLink(i){data.contact.links.splice(i,1);renderContactLinks();}
+
+function collectData(){
+  data.hero.eyebrow=document.getElementById('hero-eyebrow').value;
+  data.hero.tagline=document.getElementById('hero-tagline').value;
+  data.contact.text1=document.getElementById('contact-text1').value;
+  data.contact.text2=document.getElementById('contact-text2').value;
+  data.contact.email=document.getElementById('contact-email').value;
+  data.contact.location=document.getElementById('contact-location').value;
+  data.contact.institutionUrl=document.getElementById('contact-institutionUrl').value;
+  data.contact.degree=document.getElementById('contact-degree').value;
 }
 
-function addParagraph() { data.about.paragraphs.push(''); renderParagraphs(); }
-function delParagraph(i) { data.about.paragraphs.splice(i,1); renderParagraphs(); }
+// ── HTML Generators ─────────────────────────────────────────────
+const SITE_CSS=`*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--bg:#F7F4EF;--text:#1C1913;--accent:#3B6E50;--accent-amber:#B8762A;--accent-light:#E3EDE6;--muted:#7A7060;--border:#DDD8CD;--card-bg:#EDEBE4;--font-display:'Cormorant Garamond',Georgia,serif;--font-body:'Inter',system-ui,sans-serif}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2.5rem;height:58px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,244,239,0.9);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}nav.scrolled{border-bottom-color:var(--border)}.nav-logo{font-family:var(--font-display);font-size:1.25rem;font-weight:500;text-decoration:none;color:var(--text)}.nav-links{display:flex;gap:2rem;list-style:none}.nav-links a{font-size:.8rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s}.nav-links a:hover{color:var(--text)}.container{max-width:880px;margin:0 auto;padding:0 2rem}`;
 
-function renderTags() {
-  const el = document.getElementById('about-tags');
-  el.innerHTML = data.about.tags.map((t,i) => `
-    <span class="tag-pill">
-      <input value="${t}" onchange="data.about.tags[${i}]=this.value" style="width:${Math.max(60,t.length*8)}px">
-      <button onclick="delTag(${i})">×</button>
-    </span>`).join('');
+function generatePostHTML(post){
+  return`<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>${post.title} · Frederico Viana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+${SITE_CSS}
+.post-header{padding:120px 0 48px;border-bottom:1px solid var(--border)}
+.post-back{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-decoration:none;margin-bottom:2rem;transition:color .2s}.post-back:hover{color:var(--text)}
+.post-tag{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:.75rem;display:block}
+.post-title{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:400;line-height:1.08;margin-bottom:.75rem}
+.post-date{font-size:.85rem;color:var(--muted)}
+.post-body{padding:56px 0 80px;max-width:660px}
+.post-body p{margin-bottom:1.2em;line-height:1.8;font-size:1.05rem;color:#2a2a2a}
+.post-body h1,.post-body h2,.post-body h3{font-family:var(--font-display);font-weight:400;line-height:1.15;margin:2em 0 .75em;color:var(--text)}
+.post-body h1{font-size:2.2rem}.post-body h2{font-size:1.75rem}.post-body h3{font-size:1.4rem}
+.post-body ul,.post-body ol{padding-left:1.5rem;margin-bottom:1.2em}
+.post-body li{margin-bottom:.4em;line-height:1.7;font-size:1.05rem;color:#2a2a2a}
+.post-body blockquote{border-left:3px solid var(--accent);margin:1.5em 0;padding:.75em 1.25em;background:var(--accent-light);border-radius:0 6px 6px 0;font-style:italic;color:var(--muted)}
+.post-body a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.post-body strong{font-weight:600}
+footer{padding:2.25rem 0;text-align:center;font-size:.78rem;color:var(--muted);border-top:1px solid var(--border)}
+@media(max-width:768px){nav{padding:0 1.25rem}.container{padding:0 1.25rem}.post-header{padding:90px 0 36px}}
+@media(max-width:520px){.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav id="navbar"><a href="../index.html" class="nav-logo">F.C.V.</a><ul class="nav-links"><li><a href="../index.html#about">Sobre</a></li><li><a href="../index.html#publications">Publicações</a></li><li><a href="../index.html#blog">Blog</a></li></ul></nav>
+<main>
+<div class="post-header"><div class="container">
+  <a href="../index.html#blog" class="post-back">← Blog</a>
+  <span class="post-tag">${post.tag}</span>
+  <h1 class="post-title">${post.title}</h1>
+  <span class="post-date">${post.date}</span>
+</div></div>
+<div class="container"><div class="post-body">${post.body}</div></div>
+</main>
+<footer><div class="container">© ${new Date().getFullYear()} Frederico Campos Viana · <a href="../index.html" style="color:var(--accent);text-decoration:none">fredericoviana.com</a></div></footer>
+<script>const nav=document.getElementById('navbar');window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>20));<\/script>
+</body></html>`;
 }
 
-function addTag() { data.about.tags.push('Nova tag'); renderTags(); }
-function delTag(i) { data.about.tags.splice(i,1); renderTags(); }
+function generateSiteHTML(){
+  const d=data;const p=photo||'';
+  const pubRow=pub=>`<div class="pub-item"><span class="pub-year">${pub.year}</span><div><div class="pub-title"><span class="pub-type pub-type-${pub.type}">${PUB_TYPES[pub.type]||pub.type}</span><a href="${pub.link||'#'}" target="_blank">${pub.title}</a>${pub.isNew?'<span class="pub-badge">Novo</span>':''}</div><div class="pub-meta">${pub.authors}<br><span class="pub-venue">${pub.venue}</span></div></div></div>`;
+  const projCard=proj=>`<div class="project-card"><div class="project-icon">${proj.icon}</div><div class="project-title">${proj.title}</div><div class="project-desc">${proj.desc}</div>${proj.links.length?`<div class="project-links">${proj.links.map(l=>`<a href="${l.url}" target="_blank" class="project-link">${l.label}</a>`).join('')}</div>`:''}</div>`;
+  const internalBlogItems=d.posts.map(post=>`<a href="posts/${post.slug}.html" class="blog-item"><div><div class="blog-tag">${post.tag}</div><div class="blog-title">${post.title}</div></div><span class="blog-date">${post.date}</span></a>`).join('');
+  const externalBlogItems=d.blog.map(b=>`<a href="${b.link}" target="_blank" class="blog-item"><div><div class="blog-tag">${b.tag}</div><div class="blog-title">${b.title}</div></div><span class="blog-date">${b.date}</span></a>`).join('');
 
-function pubTypeOptions(selected) {
-  return Object.entries(PUB_TYPES).map(([k,v]) =>
-    `<option value="${k}" ${k===selected?'selected':''}>${v}</option>`).join('');
-}
-
-function renderPubs(list) {
-  const el = document.getElementById(`pub-${list}`);
-  el.innerHTML = data.publications[list].map((p,i) => `
-    <div class="card">
-      <div class="row" style="margin-bottom:10px">
-        <select onchange="data.publications['${list}'][${i}].type=this.value" style="width:140px">${pubTypeOptions(p.type)}</select>
-        <input value="${p.year}" placeholder="Ano" style="width:70px" onchange="data.publications['${list}'][${i}].year=this.value">
-        <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--amber);text-transform:none;letter-spacing:0;cursor:pointer">
-          <input type="checkbox" ${p.isNew?'checked':''} onchange="data.publications['${list}'][${i}].isNew=this.checked"> Novo
-        </label>
-        <button class="btn btn-red" style="margin-left:auto" onclick="delPub('${list}',${i})">✕</button>
-      </div>
-      <div class="field"><label>Título</label><input value="${escHtml(p.title)}" onchange="data.publications['${list}'][${i}].title=this.value"></div>
-      <div class="field"><label>Autores</label><input value="${escHtml(p.authors)}" onchange="data.publications['${list}'][${i}].authors=this.value"></div>
-      <div class="field"><label>Venue / Periódico</label><input value="${escHtml(p.venue)}" onchange="data.publications['${list}'][${i}].venue=this.value"></div>
-      <div class="field"><label>Link</label><input value="${escHtml(p.link)}" onchange="data.publications['${list}'][${i}].link=this.value" placeholder="https://"></div>
-    </div>`).join('');
-}
-
-function addPub(list, type) {
-  data.publications[list].push({year:new Date().getFullYear().toString(),type,title:'',authors:'',venue:'',link:'',isNew:true});
-  renderPubs(list);
-}
-function delPub(list, i) { data.publications[list].splice(i,1); renderPubs(list); }
-
-function renderProjects() {
-  const el = document.getElementById('projects-list');
-  el.innerHTML = data.projects.map((p,i) => `
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;margin-bottom:12px">
-        <strong>${escHtml(p.title)||`Projeto ${i+1}`}</strong>
-        <button class="btn btn-red" onclick="delProject(${i})">✕</button>
-      </div>
-      <div class="row">
-        <div class="field" style="width:72px"><label>Ícone</label><input value="${p.icon}" onchange="data.projects[${i}].icon=this.value"></div>
-        <div class="field" style="flex:1"><label>Título</label><input value="${escHtml(p.title)}" onchange="data.projects[${i}].title=this.value"></div>
-      </div>
-      <div class="field"><label>Descrição</label><textarea rows="3" onchange="data.projects[${i}].desc=this.value">${escHtml(p.desc)}</textarea></div>
-      <label style="font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase">Links</label>
-      <div id="proj-links-${i}" style="margin:6px 0">${p.links.map((l,j)=>`
-        <div class="row" style="margin-bottom:6px">
-          <input value="${escHtml(l.label)}" placeholder="Texto" style="flex:1" onchange="data.projects[${i}].links[${j}].label=this.value">
-          <input value="${escHtml(l.url)}" placeholder="https://" style="flex:2" onchange="data.projects[${i}].links[${j}].url=this.value">
-          <button class="btn btn-red" onclick="delProjLink(${i},${j})">✕</button>
-        </div>`).join('')}</div>
-      <button class="btn btn-ghost" style="font-size:12px;padding:6px 12px" onclick="addProjLink(${i})">+ Link</button>
-    </div>`).join('');
-}
-
-function addProject() { data.projects.push({icon:'🔬',title:'',desc:'',links:[]}); renderProjects(); }
-function delProject(i) { data.projects.splice(i,1); renderProjects(); }
-function addProjLink(i) { data.projects[i].links.push({label:'',url:''}); renderProjects(); }
-function delProjLink(i,j) { data.projects[i].links.splice(j,1); renderProjects(); }
-
-function renderBlog() {
-  const el = document.getElementById('blog-list');
-  el.innerHTML = data.blog.map((p,i) => `
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;margin-bottom:12px">
-        <strong>${escHtml(p.title)||`Post ${i+1}`}</strong>
-        <button class="btn btn-red" onclick="delPost(${i})">✕</button>
-      </div>
-      <div class="row">
-        <div class="field" style="flex:1"><label>Categoria</label><input value="${escHtml(p.tag)}" placeholder="Análise, Evento…" onchange="data.blog[${i}].tag=this.value"></div>
-        <div class="field" style="width:90px"><label>Data</label><input value="${p.date}" onchange="data.blog[${i}].date=this.value"></div>
-      </div>
-      <div class="field"><label>Título</label><input value="${escHtml(p.title)}" onchange="data.blog[${i}].title=this.value"></div>
-      <div class="field"><label>Link</label><input value="${escHtml(p.link)}" placeholder="https://" onchange="data.blog[${i}].link=this.value"></div>
-    </div>`).join('');
-}
-
-function addPost() { data.blog.push({tag:'',title:'',date:new Date().getFullYear().toString(),link:''}); renderBlog(); }
-function delPost(i) { data.blog.splice(i,1); renderBlog(); }
-
-function renderContactLinks() {
-  const el = document.getElementById('contact-links');
-  el.innerHTML = data.contact.links.map((l,i) => `
-    <div class="row" style="margin-bottom:8px">
-      <input value="${l.icon}" style="width:46px" onchange="data.contact.links[${i}].icon=this.value">
-      <input value="${escHtml(l.label)}" placeholder="Rótulo" style="flex:1" onchange="data.contact.links[${i}].label=this.value">
-      <input value="${escHtml(l.url)}" placeholder="https://" style="flex:2" onchange="data.contact.links[${i}].url=this.value">
-      <button class="btn btn-red" onclick="delContactLink(${i})">✕</button>
-    </div>`).join('');
-}
-
-function addContactLink() { data.contact.links.push({icon:'🔗',label:'',url:''}); renderContactLinks(); }
-function delContactLink(i) { data.contact.links.splice(i,1); renderContactLinks(); }
-
-// Collect values from simple inputs before saving
-function collectData() {
-  data.hero.eyebrow = document.getElementById('hero-eyebrow').value;
-  data.hero.tagline  = document.getElementById('hero-tagline').value;
-  data.contact.text1 = document.getElementById('contact-text1').value;
-  data.contact.text2 = document.getElementById('contact-text2').value;
-  data.contact.email = document.getElementById('contact-email').value;
-  data.contact.location = document.getElementById('contact-location').value;
-  data.contact.institutionUrl = document.getElementById('contact-institutionUrl').value;
-  data.contact.degree = document.getElementById('contact-degree').value;
-}
-
-function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-// ── HTML Generator ──────────────────────────────────────────────
-function generateSiteHTML() {
-  const d = data;
-  const p = photo || '';
-  const pubRow = pub => `<div class="pub-item"><span class="pub-year">${pub.year}</span><div><div class="pub-title"><span class="pub-type pub-type-${pub.type}">${PUB_TYPES[pub.type]||pub.type}</span><a href="${pub.link||'#'}" target="_blank">${pub.title}</a>${pub.isNew?'<span class="pub-badge">Novo</span>':''}</div><div class="pub-meta">${pub.authors}<br><span class="pub-venue">${pub.venue}</span></div></div></div>`;
-  const projCard = proj => `<div class="project-card"><div class="project-icon">${proj.icon}</div><div class="project-title">${proj.title}</div><div class="project-desc">${proj.desc}</div>${proj.links.length?`<div class="project-links">${proj.links.map(l=>`<a href="${l.url}" target="_blank" class="project-link">${l.label}</a>`).join('')}</div>`:''}</div>`;
-
-  return `<!DOCTYPE html>
+  return`<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -596,12 +601,7 @@ function generateSiteHTML() {
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#F7F4EF;--text:#1C1913;--accent:#3B6E50;--accent-amber:#B8762A;--accent-light:#E3EDE6;--muted:#7A7060;--border:#DDD8CD;--card-bg:#EDEBE4;--font-display:'Cormorant Garamond',Georgia,serif;--font-body:'Inter',system-ui,sans-serif}
-html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2.5rem;height:58px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,244,239,0.9);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}nav.scrolled{border-bottom-color:var(--border)}
-.nav-logo{font-family:var(--font-display);font-size:1.25rem;font-weight:500;text-decoration:none;color:var(--text)}.nav-links{display:flex;gap:2rem;list-style:none}.nav-links a{font-size:.8rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s}.nav-links a:hover{color:var(--text)}
-.container{max-width:880px;margin:0 auto;padding:0 2rem}
+${SITE_CSS}
 #hero{padding:148px 0 88px;background:radial-gradient(ellipse at 10% 90%,rgba(59,110,80,.09) 0%,transparent 55%),radial-gradient(ellipse at 85% 15%,rgba(184,118,42,.07) 0%,transparent 50%)}
 .hero-rule{width:48px;height:2px;background:var(--accent);margin-bottom:1.5rem;border-radius:2px}.hero-eyebrow{font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem}
 .hero-name{font-family:var(--font-display);font-size:clamp(3.2rem,8vw,5.8rem);font-weight:300;line-height:1.02;letter-spacing:-.01em;margin-bottom:1.75rem}.hero-name em{font-style:italic;font-weight:400}
@@ -638,7 +638,7 @@ footer{padding:2.25rem 0;text-align:center;font-size:.78rem;color:var(--muted);b
 </div><div class="about-text"><a href="${d.contact.institutionUrl}" target="_blank" class="hidrobr-pill"><span class="hidrobr-pill-dot"></span>PhD em Resiliência</a>${d.about.paragraphs.map(par=>`<p>${par}</p>`).join('')}<div class="interests"><p class="interests-label">Temas de pesquisa</p><div class="tags">${d.about.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div></div></div></div></section>
 <section id="publications"><div class="container"><span class="section-label">produção científica & técnica</span><h2 class="section-title">Publicações & Relatórios</h2><div class="pub-list"><p class="pub-subsection-title">Livros & Capítulos</p>${d.publications.books.map(pubRow).join('')}<p class="pub-subsection-title">Artigos & Conferências</p>${d.publications.articles.map(pubRow).join('')}</div></div></section>
 <section id="projects"><div class="container"><span class="section-label">pesquisa aplicada · HIDROBR</span><h2 class="section-title">Projetos</h2><div class="projects-grid">${d.projects.map(projCard).join('')}</div></div></section>
-<section id="blog"><div class="container"><span class="section-label">análises & reflexões · HIDROBR</span><h2 class="section-title">Blog</h2><div class="blog-list">${d.blog.map(b=>`<a href="${b.link}" target="_blank" class="blog-item"><div><div class="blog-tag">${b.tag}</div><div class="blog-title">${b.title}</div></div><span class="blog-date">${b.date}</span></a>`).join('')}</div></div></section>
+<section id="blog"><div class="container"><span class="section-label">análises & reflexões</span><h2 class="section-title">Blog</h2><div class="blog-list">${internalBlogItems}${externalBlogItems}</div></div></section>
 <section id="contact"><div class="container"><span class="section-label">vamos conversar</span><h2 class="section-title">Contato</h2><div class="contact-grid"><div class="contact-text"><p>${d.contact.text1}</p><p>${d.contact.text2}</p><p style="margin-top:1.25rem;font-size:.82rem;line-height:1.8">📍 ${d.contact.location}<br>🏢 <a href="${d.contact.institutionUrl}" target="_blank" style="color:var(--accent);text-decoration:none">HIDROBR</a><br>🎓 ${d.contact.degree}</p></div><div class="contact-links"><a href="mailto:${d.contact.email}" class="contact-link"><span class="contact-icon">✉️</span>${d.contact.email}</a>${d.contact.links.map(l=>`<a href="${l.url}" target="_blank" class="contact-link"><span class="contact-icon">${l.icon}</span>${l.label}</a>`).join('')}</div></div></div></section>
 </main>
 <footer><div class="container">© ${new Date().getFullYear()} Frederico Campos Viana · PhD em Resiliência</div></footer>
@@ -647,12 +647,9 @@ footer{padding:2.25rem 0;text-align:center;font-size:.78rem;color:var(--muted);b
 }
 
 // ── Init ────────────────────────────────────────────────────────
-(function init() {
-  cfg = loadConfig();
-  if (cfg) {
-    document.getElementById('setup').style.display = 'none';
-    loadData();
-  }
+(function(){
+  cfg=loadConfig();
+  if(cfg){document.getElementById('setup').style.display='none';loadData();}
 })();
 </script>
 </body>
