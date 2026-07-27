@@ -1,0 +1,219 @@
+{
+  "hero": {
+    "eyebrow": "Gerente de Sustentabilidade · HIDROBR · PhD em Resiliência",
+    "tagline": "Investigo como sistemas críticos respondem a choques climáticos e pressões institucionais. Na HIDROBR, esse trabalho vira prática: projetos, políticas e decisões com base científica."
+  },
+  "about": {
+    "paragraphs": [
+      "Sou Engenheiro Ambiental pela FUMEC, com mestrado em Estratégia Empresarial e doutor em Sustentabilidade pela Fundação Getulio Vargas (FGV). Realizei estágio doutoral na Pontificia Universidad Católica de Valparaíso (PUCV), no Chile, onde aprofundei o uso de inteligência artificial aplicada a engenharia.",
+      "Na HIDROBR, lidero a área de Sustentabilidade. Tenho trabalhos publicados sobre resiliência energética, gestão de desastres e mercados de carbono.",
+      "Minha pesquisa parte da teoria da panarquia e dos Sistemas Socioecológicos (SES) para entender como sistemas críticos, especialmente o setor elétrico brasileiro, respondem a choques climáticos e falhas de governança. A distância entre ciência e decisão ainda é grande demais."
+    ],
+    "tags": [
+      "Sistemas Socioecológicos",
+      "Adaptação Climática",
+      "Teoria da Panarquia",
+      "Governança",
+      "Mercados de Carbono",
+      "Resiliência"
+    ]
+  },
+  "publications": {
+    "books": [
+      {
+        "year": "2024",
+        "type": "livro",
+        "title": "IUCN Rio Doce Panel: Stories of Influence in Dam Disaster Recovery",
+        "authors": "Viana, F. C.",
+        "venue": "IUCN — International Union for Conservation of Nature, Gland, Suíça",
+        "link": "https://portals.iucn.org/library/sites/library/files/documents/2024-003-En.pdf",
+        "isNew": false
+      },
+      {
+        "year": "2021",
+        "type": "livro",
+        "title": "Transformando Empresas em Negócios Sustentáveis",
+        "authors": "Viana, F. C.",
+        "venue": "Publicação autoral",
+        "link": "https://www.researchgate.net/publication/353841764_Transformando_Empresas_em_Negocios_Sustentaveis_A_experiencia_da_Refugio_em_gestao_ambiental_industrial",
+        "isNew": false
+      },
+      {
+        "year": "2021",
+        "type": "capitulo",
+        "title": "Um Estudo de Caso dos Princípios da Economia Circular e da Sustentabilidade em Uma MPE do Estado de Minas Gerais",
+        "authors": "Viana, F. C.",
+        "venue": "Capítulo de livro, 2021",
+        "link": "https://www.researchgate.net/publication/348954916_Um_Estudo_de_Caso_dos_Principios_da_Economia_Circular_e_da_Sustentabilidade_em_Uma_MPE_do_Estado_de_Minas_Gerais",
+        "isNew": false
+      }
+    ],
+    "articles": [
+      {
+        "year": "2024",
+        "type": "apresentacao",
+        "title": "E se o Mercado de Carbono Fosse Acessível para Todo Mundo? Relato de um Experimento",
+        "authors": "Viana, F. C., Queiroz, V. C.",
+        "venue": "IAIA24 — International Association for Impact Assessment, Dublin, Irlanda",
+        "link": "https://www.hidrobr.com/artigo/e-se-o-mercado-de-carbono-fosse-acessivel-para-todo-mundo-relato-de-um-experimento/",
+        "isNew": false
+      },
+      {
+        "year": "2023",
+        "type": "apresentacao",
+        "title": "E se o Mercado de Carbono Fosse Acessível para Todo Mundo? Relato de um Experimento",
+        "authors": "Viana, F. C., Queiroz, V. C.",
+        "venue": "CONTECC — Congresso Técnico Científico da Engenharia e da Agronomia, 2023",
+        "link": "https://www.researchgate.net/publication/377106853_E_SE_O_MERCADO_DE_CARBONO_FOSSE_ACESSIVEL_PARA_TODO_MUNDO_RELATO_DE_UM_EXPERIMENTO",
+        "isNew": false
+      },
+      {
+        "year": "2022",
+        "type": "apresentacao",
+        "title": "The Search for Specifics in Ex-Post Impact Assessments",
+        "authors": "Viana, F. C.",
+        "venue": "IAIA22 — International Association for Impact Assessment, Vancouver, Canadá",
+        "link": "#",
+        "isNew": false
+      },
+      {
+        "year": "2021",
+        "type": "apresentacao",
+        "title": "The Use of Axioms for Disasters Impact Assessment: a Lesson Learned from Fundão Dam",
+        "authors": "Viana, F. C., Cavalcante, A. S.",
+        "venue": "IAIA21 — International Association for Impact Assessment",
+        "link": "https://doi.org/10.13140/RG.2.2.30484.01925",
+        "isNew": false
+      },
+      {
+        "year": "2021",
+        "type": "artigo",
+        "title": "A Importância da Governança em Momentos de Crise: um Teste do G do ESG na Vida Real",
+        "authors": "Viana, F. C., Bernardo Junior, C.",
+        "venue": "SEMEAD — Seminários em Administração, USP, 2021",
+        "link": "https://doi.org/10.13140/RG.2.2.35951.36004",
+        "isNew": false
+      },
+      {
+        "year": "2021",
+        "type": "artigo",
+        "title": "A Sustentabilidade na Indústria da Moda e o Ressurgimento dos Corantes Naturais: desafios e possibilidades no século XXI",
+        "authors": "Souza, T., Ribeiro, R., Ayres, E., Viana, F. C.",
+        "venue": "Dobras — Revista da Associação Brasileira de Estudos de Pesquisas em Moda, 2021",
+        "link": "https://doi.org/10.26563/dobras.i32.1367",
+        "isNew": false
+      },
+      {
+        "year": "2021",
+        "type": "apresentacao",
+        "title": "Os Axiomas da Avaliação de Impacto de Desastres",
+        "authors": "Viana, F. C., Cavalcante, A. S.",
+        "venue": "CBAI — Congresso Brasileiro de Avaliação de Impactos, 2021",
+        "link": "https://www.researchgate.net/publication/355446212_OS_AXIOMAS_DA_AVALIACAO_DE_IMPACTO_DE_DESASTRES_-_CBAI_2021",
+        "isNew": false
+      }
+    ]
+  },
+  "projects": [
+    {
+      "icon": "⚡",
+      "title": "Resiliência no Setor Elétrico Brasileiro",
+      "desc": "Pesquisa de doutorado concluída pela FGV sobre como o setor elétrico brasileiro responde a choques climáticos e falhas de governança. Metodologia baseada em SES e teoria da panarquia, com análise institucional histórica e entrevistas.",
+      "links": [
+        {
+          "label": "ResearchGate →",
+          "url": "https://www.researchgate.net/profile/Frederico-Viana"
+        }
+      ]
+    },
+    {
+      "icon": "🌊",
+      "title": "Painel Rio Doce (IUCN)",
+      "desc": "Trabalho sobre o Painel Científico do Rio Doce (IUCN), com análise do rompimento da barragem de Fundão em 2015. Publicado em 2024 pela IUCN.",
+      "links": [
+        {
+          "label": "IUCN →",
+          "url": "https://iucn.org/resources/grey-literature/iucn-rio-doce-panel"
+        },
+        {
+          "label": "PDF →",
+          "url": "https://portals.iucn.org/library/sites/library/files/documents/2024-003-En.pdf"
+        }
+      ]
+    },
+    {
+      "icon": "♻️",
+      "title": "Feira do Carbono",
+      "desc": "Modelo de compensação de carbono conectado a cooperativas, desenvolvido na HIDROBR. Apresentado no IAIA24 em Dublin e no CONTECC 2023.",
+      "links": [
+        {
+          "label": "Artigo →",
+          "url": "https://www.hidrobr.com/artigo/e-se-o-mercado-de-carbono-fosse-acessivel-para-todo-mundo-relato-de-um-experimento/"
+        }
+      ]
+    },
+    {
+      "icon": "🤖",
+      "title": "IA & Bibliometria em Resiliência Energética",
+      "desc": "Estudo bibliométrico com machine learning sobre a evolução da pesquisa em resiliência energética. Desenvolvido durante estágio doutoral na PUCV.",
+      "links": []
+    }
+  ],
+  "blog": [
+    {
+      "tag": "Análise",
+      "title": "Falhas Recorrentes em Sistemas Elétricos",
+      "date": "2025",
+      "link": "https://www.hidrobr.com/artigo/falhas-recorrentes-em-sistemas-eletricos/"
+    },
+    {
+      "tag": "Análise Climática",
+      "title": "Super El Niño 2026",
+      "date": "2025",
+      "link": "https://www.hidrobr.com/artigo/super-el-nino-2026/"
+    },
+    {
+      "tag": "Evento",
+      "title": "Notas do Evento: Resiliência nas Operações de Mineração",
+      "date": "2024",
+      "link": "https://www.hidrobr.com/artigo/notas-do-evento-resiliencia-nas-operacoes-de-mineracao/"
+    },
+    {
+      "tag": "Workshop",
+      "title": "III Workshop HIDROBR — Pilhas na Mineração: do Projeto à Operação",
+      "date": "2024",
+      "link": "https://www.hidrobr.com/artigo/iii-workshop-hidrobr-pilhas-na-mineracao-do-projeto-a-operacao/"
+    },
+    {
+      "tag": "Estudo de Caso",
+      "title": "E se o Mercado de Carbono Fosse Acessível para Todo Mundo?",
+      "date": "2023",
+      "link": "https://www.hidrobr.com/artigo/e-se-o-mercado-de-carbono-fosse-acessivel-para-todo-mundo-relato-de-um-experimento/"
+    }
+  ],
+  "contact": {
+    "text1": "Atuo como Gerente de Sustentabilidade na HIDROBR. Para projetos de consultoria, o contato é pelo site da empresa.",
+    "text2": "Para colaborações de pesquisa, palestras ou revisão de artigos, fale diretamente comigo.",
+    "email": "fredcviana@gmail.com",
+    "location": "Belo Horizonte, Minas Gerais",
+    "institutionUrl": "https://hidrobr.com",
+    "degree": "PhD em Resiliência · FGV",
+    "links": [
+      {
+        "icon": "🎓",
+        "label": "ResearchGate",
+        "url": "https://www.researchgate.net/profile/Frederico-Viana"
+      },
+      {
+        "icon": "💼",
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/frederico-campos-viana-65686014"
+      },
+      {
+        "icon": "🌐",
+        "label": "HIDROBR",
+        "url": "https://hidrobr.com"
+      }
+    ]
+  }
+}
