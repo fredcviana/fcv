@@ -539,7 +539,38 @@ function collectData(){
 }
 
 // ── HTML Generators ─────────────────────────────────────────────
-const SITE_CSS=`*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--bg:#F7F4EF;--text:#1C1913;--accent:#3B6E50;--accent-amber:#B8762A;--accent-light:#E3EDE6;--muted:#7A7060;--border:#DDD8CD;--card-bg:#EDEBE4;--font-display:'Cormorant Garamond',Georgia,serif;--font-body:'Inter',system-ui,sans-serif}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2.5rem;height:58px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,244,239,0.9);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}nav.scrolled{border-bottom-color:var(--border)}.nav-logo{font-family:var(--font-display);font-size:1.25rem;font-weight:500;text-decoration:none;color:var(--text)}.nav-links{display:flex;gap:2rem;list-style:none}.nav-links a{font-size:.8rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s}.nav-links a:hover{color:var(--text)}.container{max-width:880px;margin:0 auto;padding:0 2rem}`;
+const SITE_CSS=`*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}:root{--bg:#F7F4EF;--text:#1C1913;--accent:#3B6E50;--accent-amber:#B8762A;--accent-light:#E3EDE6;--muted:#7A7060;--border:#DDD8CD;--card-bg:#EDEBE4;--font-display:'Cormorant Garamond',Georgia,serif;--font-body:'Inter',system-ui,sans-serif}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+/* Mobile nav */
+#topnav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,244,239,0.92);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
+#topnav.scrolled{border-bottom-color:var(--border)}
+.nav-logo{font-family:var(--font-display);font-size:1.2rem;font-weight:500;text-decoration:none;color:var(--text)}
+.nav-links{display:flex;gap:1.75rem;list-style:none}.nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s}.nav-links a:hover{color:var(--text)}
+/* Page grid */
+.page-grid{display:flex;min-height:100vh}
+.site-sidebar{display:none}
+.site-main{flex:1;min-width:0}
+.container{max-width:860px;margin:0 auto;padding:0 2rem}
+/* Desktop sidebar */
+@media(min-width:1024px){
+  #topnav{display:none}
+  .page-grid{display:grid;grid-template-columns:260px 1fr}
+  .site-sidebar{display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--border);background:#fff;padding:2.75rem 2rem;flex-shrink:0}
+  .sb-logo{font-family:var(--font-display);font-size:1.6rem;font-weight:300;line-height:1.1;margin-bottom:.6rem;color:var(--text)}
+  .sb-logo em{font-style:italic}
+  .sb-role{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:.2rem}
+  .sb-inst{font-size:.78rem;color:var(--muted);margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+  .sb-nav{display:flex;flex-direction:column;gap:.1rem;flex:1}
+  .sb-nav a{font-size:.88rem;color:var(--muted);text-decoration:none;padding:.55rem .75rem;border-radius:6px;border-left:2px solid transparent;transition:all .15s;display:block}
+  .sb-nav a:hover{color:var(--text);background:var(--bg);border-left-color:var(--accent)}
+  .sb-social{margin-top:auto;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:.6rem}
+  .sb-social a{font-size:.78rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:color .15s}
+  .sb-social a:hover{color:var(--accent)}
+  #hero{padding-top:80px}
+  .projects-grid{grid-template-columns:repeat(3,1fr)}
+  .container{max-width:none;padding:0 3.5rem}
+}
+@media(max-width:1023px){.site-sidebar{display:none}}
+@media(max-width:640px){.nav-links{display:none}}`;
 
 function generatePostHTML(post){
   return`<!DOCTYPE html>
@@ -571,7 +602,7 @@ footer{padding:2.25rem 0;text-align:center;font-size:.78rem;color:var(--muted);b
 </style>
 </head>
 <body>
-<nav id="navbar"><a href="../index.html" class="nav-logo">F.C.V.</a><ul class="nav-links"><li><a href="../index.html#about">Sobre</a></li><li><a href="../index.html#publications">Publicações</a></li><li><a href="../index.html#blog">Blog</a></li></ul></nav>
+<nav id="topnav"><a href="../index.html" class="nav-logo">F.C.V.</a><ul class="nav-links"><li><a href="../index.html#about">Sobre</a></li><li><a href="../index.html#publications">Publicações</a></li><li><a href="../index.html#blog">Blog</a></li></ul></nav>
 <main>
 <div class="post-header"><div class="container">
   <a href="../index.html#blog" class="post-back">← Blog</a>
@@ -581,8 +612,9 @@ footer{padding:2.25rem 0;text-align:center;font-size:.78rem;color:var(--muted);b
 </div></div>
 <div class="container"><div class="post-body">${post.body}</div></div>
 </main>
+</div>
 <footer><div class="container">© ${new Date().getFullYear()} Frederico Campos Viana · <a href="../index.html" style="color:var(--accent);text-decoration:none">fredericoviana.com</a></div></footer>
-<script>const nav=document.getElementById('navbar');window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>20));<\/script>
+<script>const nav=document.getElementById('topnav');if(nav)window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>20));<\/script>
 </body></html>`;
 }
 
@@ -631,9 +663,26 @@ footer{padding:2.25rem 0;text-align:center;font-size:.78rem;color:var(--muted);b
 </style>
 </head>
 <body>
-<nav id="navbar"><a href="#hero" class="nav-logo">F.C.V.</a><ul class="nav-links"><li><a href="#about">Sobre</a></li><li><a href="#publications">Publicações</a></li><li><a href="#projects">Projetos</a></li><li><a href="#blog">Blog</a></li><li><a href="#contact">Contato</a></li></ul></nav>
-<main>
-<section id="hero"><div class="container"><div class="hero-rule"></div><p class="hero-eyebrow">${d.hero.eyebrow}</p><h1 class="hero-name">Frederico<br><em>Campos Viana</em></h1><p class="hero-tagline">${d.hero.tagline}</p><div class="hero-actions"><a href="#contact" class="btn btn-primary">Entre em contato</a><a href="#publications" class="btn btn-ghost">Publicações & Relatórios</a><a href="https://hidrobr.com.br" target="_blank" class="btn btn-ghost">HIDROBR ↗</a></div></div></section>
+<nav id="topnav"><a href="#hero" class="nav-logo">F.C.V.</a><ul class="nav-links"><li><a href="#about">Sobre</a></li><li><a href="#publications">Publicações</a></li><li><a href="#projects">Projetos</a></li><li><a href="#blog">Blog</a></li><li><a href="#contact">Contato</a></li></ul></nav>
+<div class="page-grid">
+<aside class="site-sidebar">
+  <div class="sb-logo">Frederico<br><em>Campos Viana</em></div>
+  <div class="sb-role">PhD em Resiliência</div>
+  <div class="sb-inst">HIDROBR</div>
+  <nav class="sb-nav">
+    <a href="#about">Sobre</a>
+    <a href="#publications">Publicações</a>
+    <a href="#projects">Projetos</a>
+    <a href="#blog">Blog</a>
+    <a href="#contact">Contato</a>
+  </nav>
+  <div class="sb-social">
+    <a href="mailto:${d.contact.email}">✉ ${d.contact.email}</a>
+    ${d.contact.links.map(l=>`<a href="${l.url}" target="_blank">${l.icon} ${l.label}</a>`).join('')}
+  </div>
+</aside>
+<main class="site-main">
+<section id="hero"><div class="container"><div class="hero-rule"></div><p class="hero-eyebrow">${d.hero.eyebrow}</p><h1 class="hero-name">Frederico<br><em>Campos Viana</em></h1><p class="hero-tagline">${d.hero.tagline}</p><div class="hero-actions"><a href="#contact" class="btn btn-primary">Entre em contato</a><a href="#publications" class="btn btn-ghost">Publicações & Relatórios</a><a href="${d.contact.institutionUrl}" target="_blank" class="btn btn-ghost">HIDROBR ↗</a></div></div></section>
 <section id="about"><div class="container"><span class="section-label">quem sou eu</span><h2 class="section-title">Sobre</h2><div class="about-grid"><div class="about-photo">${p?`<img src="${p}" alt="Frederico Campos Viana">`:''}
 </div><div class="about-text"><a href="${d.contact.institutionUrl}" target="_blank" class="hidrobr-pill"><span class="hidrobr-pill-dot"></span>PhD em Resiliência</a>${d.about.paragraphs.map(par=>`<p>${par}</p>`).join('')}<div class="interests"><p class="interests-label">Temas de pesquisa</p><div class="tags">${d.about.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div></div></div></div></section>
 <section id="publications"><div class="container"><span class="section-label">produção científica & técnica</span><h2 class="section-title">Publicações & Relatórios</h2><div class="pub-list"><p class="pub-subsection-title">Livros & Capítulos</p>${d.publications.books.map(pubRow).join('')}<p class="pub-subsection-title">Artigos & Conferências</p>${d.publications.articles.map(pubRow).join('')}</div></div></section>
@@ -642,7 +691,7 @@ footer{padding:2.25rem 0;text-align:center;font-size:.78rem;color:var(--muted);b
 <section id="contact"><div class="container"><span class="section-label">vamos conversar</span><h2 class="section-title">Contato</h2><div class="contact-grid"><div class="contact-text"><p>${d.contact.text1}</p><p>${d.contact.text2}</p><p style="margin-top:1.25rem;font-size:.82rem;line-height:1.8">📍 ${d.contact.location}<br>🏢 <a href="${d.contact.institutionUrl}" target="_blank" style="color:var(--accent);text-decoration:none">HIDROBR</a><br>🎓 ${d.contact.degree}</p></div><div class="contact-links"><a href="mailto:${d.contact.email}" class="contact-link"><span class="contact-icon">✉️</span>${d.contact.email}</a>${d.contact.links.map(l=>`<a href="${l.url}" target="_blank" class="contact-link"><span class="contact-icon">${l.icon}</span>${l.label}</a>`).join('')}</div></div></div></section>
 </main>
 <footer><div class="container">© ${new Date().getFullYear()} Frederico Campos Viana · PhD em Resiliência</div></footer>
-<script>const nav=document.getElementById('navbar');window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>20));<\/script>
+<script>const nav=document.getElementById('topnav');if(nav)window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>20));<\/script>
 </body></html>`;
 }
 
